@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsGenerator>true</IsGenerator>
+        <Description>a proxy class source generator.</Description>
+        <PackageTags>sg-proxy;proxy-sg;proxy;$(PackageTags)</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup Label="Misc">
+        <Compile Remove="Assets\**\*.cs"/>
+        <EmbeddedResource Include="Assets\**\*.cs"/>
+        <None Remove="AnalyzerReleases.*.md"/>
+        <AdditionalFiles Include="AnalyzerReleases.*.md"/>
+    </ItemGroup>
+    
+    <Import Project="..\..\..\build\common.props" />
+</Project>

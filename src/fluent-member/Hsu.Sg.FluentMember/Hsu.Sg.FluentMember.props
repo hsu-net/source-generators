@@ -1,0 +1,11 @@
+﻿<Project>
+    <ItemGroup>
+        <CompilerVisibleProperty Include="GlobalFluentMemberPrefix" />
+    </ItemGroup>
+
+    <Target Name="FluentMemberPrefixAssign" BeforeTargets="GenerateMSBuildEditorConfigFileCore">
+        <PropertyGroup>
+            <GlobalFluentMemberPrefix>$(FluentMemberPrefix)</GlobalFluentMemberPrefix>
+        </PropertyGroup>
+    </Target>
+</Project>

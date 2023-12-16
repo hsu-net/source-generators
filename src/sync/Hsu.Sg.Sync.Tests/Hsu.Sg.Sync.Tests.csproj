@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+<!--        <TargetFramework>net461</TargetFramework>-->
+        <TargetFrameworks>net461;net462;netstandard2.0;netstandard2.1;netcoreapp3.1;net8.0</TargetFrameworks>
+        <LangVersion>11.0</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+        <RootNamespace>HsuSgSyncTests</RootNamespace>
+        <NoWarn>CS8701;$(NoWarn)</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Hsu.Sg.Sync\Hsu.Sg.Sync.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+<!--        <ProjectReference Include="..\Hsu.Sg.Sync\Hsu.Sg.Sync.csproj" />-->
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.7.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
+        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
+        <PackageReference Include="coverlet.collector" Version="6.0.0" />
+        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" Condition="'$(TargetFramework)'==net461" />
+        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+<!--        <Compile Remove="Samples\**" />-->
+<!--        <None Include="Samples\**" />-->
+    </ItemGroup>
+
+</Project>

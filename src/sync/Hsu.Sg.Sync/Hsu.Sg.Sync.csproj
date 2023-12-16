@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsGenerator>true</IsGenerator>
+        <Description>an async method to sync source generator.</Description>
+        <PackageTags>sg-sync;sync-sg;sync;$(PackageTags)</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup Label="Misc">
+        <Compile Remove="Assets\**\*.cs"/>
+        <EmbeddedResource Include="Assets\**\*.cs"/>
+        <None Remove="AnalyzerReleases.*.md"/>
+        <AdditionalFiles Include="AnalyzerReleases.*.md"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2"/>
+    </ItemGroup>
+
+    <Import Project="..\..\..\build\common.props"/>
+</Project>

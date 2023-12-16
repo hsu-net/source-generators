@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsGenerator>true</IsGenerator>
+        <Description>a fluent member source generator.</Description>
+        <PackageTags>sg-fluent-member;fluent-member-sg;fluent-member;$(PackageTags)</PackageTags>
+<!--        <DefineConstants>FM_GEN_DEBUG;$(DefineConstants)</DefineConstants>-->
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <!-- Package the props file -->
+        <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup Label="Misc">
+        <Compile Remove="Assets\**\*.cs"/>
+        <EmbeddedResource Include="Assets\**\*.cs"/>
+        <None Remove="AnalyzerReleases.*.md"/>
+        <AdditionalFiles Include="AnalyzerReleases.*.md"/>
+    </ItemGroup>
+
+    <Import Project="..\..\..\build\common.props" />
+</Project>

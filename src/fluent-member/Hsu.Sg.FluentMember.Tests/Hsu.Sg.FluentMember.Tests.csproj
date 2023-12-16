@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <!--        <TargetFramework>net8.0</TargetFramework>-->
+        <TargetFrameworks>net461;net462;netstandard2.0;net8.0</TargetFrameworks>
+        <LangVersion>11.0</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+        <RootNamespace>HsuSgFluentMemberTests</RootNamespace>
+        <NoWarn>NETSDK1057;CS8701;CS8618;$(NoWarn)</NoWarn>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+        <FluentMemberPrefix>Set</FluentMemberPrefix>
+    </PropertyGroup>
+
+<!--    <PropertyGroup>-->
+<!--&lt;!&ndash;        <RestoreSources>$(RestoreSources);$(MSBuildProjectDirectory)..\..\..\..\output\libs\Hsu.Sg.FluentMember\</RestoreSources>&ndash;&gt;-->
+<!--        <AssetTargetFallback>$(AssetTargetFallback);$(MSBuildProjectDirectory)..\..\..\..\output\libs\Hsu.Sg.FluentMember\</AssetTargetFallback>-->
+<!--    </PropertyGroup>-->
+
+    <ItemGroup>
+        <Compile Remove="Generated\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Hsu.Sg.FluentMember\Hsu.Sg.FluentMember.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+<!--        <PackageReference Include="Hsu.Sg.FluentMember" Version="2023.412.*"/>-->
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
+        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4"/>
+        <PackageReference Include="MSTest.TestFramework" Version="3.0.4"/>
+        <PackageReference Include="coverlet.collector" Version="6.0.0"/>
+    </ItemGroup>
+
+</Project>

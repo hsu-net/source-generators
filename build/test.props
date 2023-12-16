@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <OutputPath>$(MSBuildThisFileDirectory)..\output\tests\$(AssemblyName)</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+<!--    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />-->
+<!--    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />-->
+<!--    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />-->
+<!--    <PackageReference Include="coverlet.collector" Version="3.1.2" />-->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.4"/>
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.4"/>
+    <PackageReference Include="coverlet.collector" Version="6.0.0"/>
+  </ItemGroup>
+</Project>

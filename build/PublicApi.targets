@@ -1,0 +1,58 @@
+﻿<Project>
+    <!-- Generate dirs and files for Microsoft.CodeAnalysis.PublicApiAnalyzers -->
+    <Target Name="EnsurePublicApiFilesExist"
+            BeforeTargets="BeforeBuild">
+        <PropertyGroup>
+            <NoWarn>RS0016;$(NoWarn)</NoWarn>
+            <NullableWrite Condition=" '$(Nullable)' == 'enable' or '$(Nullable)' == 'true' ">true</NullableWrite>
+            <PublicApiAnalyzerEnabled Condition=" '$(PublicApiAnalyzerEnabled)' == '' ">true</PublicApiAnalyzerEnabled>
+            <HasPublicApiAnalyzersPackage
+                    Condition="@(PackageReference->WithMetadataValue('Identity', 'Microsoft.CodeAnalysis.PublicApiAnalyzers')->Count()) != 0">true</HasPublicApiAnalyzersPackage>
+        </PropertyGroup>
+
+        <Message Text="'Microsoft.CodeAnalysis.PublicApiAnalyzers' Reference : $(HasPublicApiAnalyzersPackage) " Importance="high"/>
+    </Target>
+
+    <Target Name="_EnsurePublicApiFilesExist"
+            Condition=" '$(HasPublicApiAnalyzersPackage)' == 'true' and '$(PublicApiAnalyzerEnabled)'== 'true' "
+            BeforeTargets="BeforeBuild" DependsOnTargets="EnsurePublicApiFilesExist">
+
+        <ItemGroup Condition="$(TargetFrameworks) == ''">
+            <_PublicApiFiles Include="PublicAPI/PublicAPI.Shipped.txt"/>
+            <_PublicApiFiles Include="PublicAPI/PublicAPI.Unshipped.txt"/>
+        </ItemGroup>
+
+        <ItemGroup Condition="$(TargetFrameworks) != ''">
+            <_PublicApiFiles Include="PublicAPI/$(TargetFramework)/PublicAPI.Shipped.txt"/>
+            <_PublicApiFiles Include="PublicAPI/$(TargetFramework)/PublicAPI.Unshipped.txt"/>
+        </ItemGroup>
+
+        <ItemGroup>
+            <PublicApiFoldersToMake
+                    Include="%(_PublicApiFiles.RelativeDir)" 
+                    Condition="!Exists(%(_PublicApiFiles.RelativeDir))"
+                    KeepDuplicates="false"/>
+            <PublicApiFilesToTouch
+                    Include="%(_PublicApiFiles.Identity)" 
+                    Condition="!Exists(%(_PublicApiFiles.Identity))"
+                    KeepDuplicates="false"/>
+        </ItemGroup>
+
+        <MakeDir Directories="@(PublicApiFoldersToMake)"/>
+
+        <Touch
+                Condition=" '$(NullableWrite)' != 'true' "
+                AlwaysCreate="true"
+                Files="@(PublicApiFilesToTouch)">
+            <Output TaskParameter="TouchedFiles" ItemName="FilesTouched"/>
+        </Touch>
+
+        <Exec
+                Condition=" '$(NullableWrite)' == 'true' "
+                Command="echo #nullable enable > %(PublicApiFilesToTouch.FullPath)"/>
+        
+        <ItemGroup>
+            <AdditionalFiles Include="PublicAPI/**/*"/>
+        </ItemGroup>
+    </Target>
+</Project>

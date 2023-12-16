@@ -1,0 +1,26 @@
+<Project>
+	<PropertyGroup>
+		<DisableFody>false</DisableFody>
+		<FodyGenerateXsd>false</FodyGenerateXsd>
+		<FodyConfigureAwaitable>true</FodyConfigureAwaitable>
+		<FodyCosturable>false</FodyCosturable>
+		<FodyJetBrainsAnnotations>false</FodyJetBrainsAnnotations>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--    <None Include="$(MSBuildThisFileDirectory)FodyWeavers.xsd" LinkBase=".config" />-->
+		<!--    <None Include="$(MSBuildThisFileDirectory)FodyWeavers.xml" LinkBase=".config" />-->
+		<PackageReference Include="Fody" Version="6.6.4">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="ConfigureAwait.Fody" Version="3.3.2" Condition="'$(FodyConfigureAwaitable)' == 'true'">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Costura.Fody" Version="5.7.0" Condition="'$(FodyCosturable)' == 'true'">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="JetBrainsAnnotations.Fody" Version="2.17.0" Condition="'$(FodyJetBrainsAnnotations)' == 'true'">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,99 @@
+<Project>
+
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+        <CheckEolTargetFramework>false</CheckEolTargetFramework>
+        <IsTestProject 
+                Condition="$(MSBuildProjectFullPath.Contains('test')) and ($(MSBuildProjectName.EndsWith('.Tests')) or $(MSBuildProjectName.EndsWith('.TestBase')))">true</IsTestProject>
+        <IsSampleProject 
+                Condition="$(MSBuildProjectFullPath.Contains('\sample\')) or $(MSBuildProjectFullPath.Contains('/sample/'))">true</IsSampleProject>
+        <IsAppProject 
+                Condition="$(MSBuildProjectFullPath.Contains('\app\')) or $(MSBuildProjectFullPath.Contains('/app/'))">true</IsAppProject>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <CommonIgnoreFiles>$(MSBuildThisFileDirectory)**\obj\*;$(CommonIgnoreFiles)</CommonIgnoreFiles>
+        <CommonIgnoreFiles>$(MSBuildThisFileDirectory)**\bin\*;$(CommonIgnoreFiles)</CommonIgnoreFiles>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <CommonPropsFiles>$(MSBuildThisFileDirectory)**\*.props;$(CommonPropsFiles)</CommonPropsFiles>
+        <CommonPropsFiles>$(MSBuildThisFileDirectory)**\*.targets;$(CommonPropsFiles)</CommonPropsFiles>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <None 
+                Include="$(CommonPropsFiles)" 
+                Exclude="$(CommonIgnoreFiles)">
+            <Link>.props\%(RecursiveDir)\%(Filename)%(Extension)</Link>
+        </None>
+    </ItemGroup>
+    
+    <PropertyGroup>
+        <CommonAssetFiles>$(MSBuildThisFileDirectory)**\README.*;$(CommonAssetFiles)</CommonAssetFiles>
+        <CommonAssetFiles>$(MSBuildThisFileDirectory)**\LICENSE;$(CommonAssetFiles)</CommonAssetFiles>
+        <CommonAssetFiles>$(MSBuildThisFileDirectory)**\.editorconfig;$(CommonAssetFiles)</CommonAssetFiles>
+        <CommonAssetFiles>$(MSBuildThisFileDirectory)**\.gitignore;$(CommonAssetFiles)</CommonAssetFiles>
+        <CommonAssetFiles>$(MSBuildThisFileDirectory)**\NuGet.config;$(CommonAssetFiles)</CommonAssetFiles>
+        <CommonAssetFiles>$(MSBuildThisFileDirectory)**\global.json;$(CommonAssetFiles)</CommonAssetFiles>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="$(CommonAssetFiles)" Exclude="$(CommonIgnoreFiles)">
+            <Link>.assets\%(RecursiveDir)\%(Filename)%(Extension)</Link>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="*">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PolySharpable Condition="'$(PolySharpable)' == ''">false</PolySharpable>
+        <PolySharpable Condition="$(TargetFramework.StartsWith('netcoreapp')) or $(TargetFramework.StartsWith('net4')) or $(TargetFramework.StartsWith('netstandard'))">true</PolySharpable>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(PolySharpable)' == 'true'">
+        <PackageReference Include="PolySharp" Version="1.13.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <!--	<PropertyGroup>-->
+    <!--		<PolySharpable Condition="'$(PolySharpable)' == ''">false</PolySharpable>-->
+    <!--		<PolySharpable Condition="$(TargetFramework.StartsWith('netcoreapp')) or $(TargetFramework.StartsWith('net4')) or $(TargetFramework.StartsWith('netstandard'))">true</PolySharpable>-->
+    <!--		<PolySharpIncludeGeneratedTypes Condition="'$(PolySharpable)' == 'true'">$(PolySharpIncludeGeneratedTypes);IsExternalInit;</PolySharpIncludeGeneratedTypes>-->
+    <!--	</PropertyGroup>-->
+    <!--	-->
+    <!--	<ItemGroup Condition="'$(PolySharpable)' == 'true'">-->
+    <!--		<PackageReference Include="PolySharp" Version="1.13.2">-->
+    <!--			<PrivateAssets>all</PrivateAssets>-->
+    <!--			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+    <!--		</PackageReference>-->
+    <!--	</ItemGroup>-->
+
+    <!--
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFrameworks)' == ''">
+        <AdditionalFiles Include="PublicAPI.Shipped.txt" />
+        <AdditionalFiles Include="PublicAPI.Unshipped.txt" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFrameworks)' != ''">
+        <AdditionalFiles Include="PublicAPI/$(TargetFramework)/PublicAPI.Shipped.txt" />
+        <AdditionalFiles Include="PublicAPI/$(TargetFramework)/PublicAPI.Unshipped.txt" />
+    </ItemGroup>
+    -->
+
+    <Import
+            Project="$(MSBuildThisFileDirectory)build\fody.props"
+            Condition="Exists('$(MSBuildThisFileDirectory)build\fody.props')"/>
+</Project>

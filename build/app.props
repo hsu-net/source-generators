@@ -1,0 +1,6 @@
+<Project>
+	<PropertyGroup>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<OutputPath>$(MSBuildThisFileDirectory)..\output\app\$(AssemblyName)</OutputPath>
+	</PropertyGroup>
+</Project>
