@@ -63,14 +63,14 @@ partial class Build : NukeBuild
         {
             versions = new Dictionary<string, string>();
             // NuGet Packages
-            if (Environment.OSVersion.Platform is PlatformID.Win32NT)
-            {
-                Environment.SetEnvironmentVariable("NUGET_PACKAGES","%userprofile%\\.nuget\\packages");
-            }
-            else
-            {
-                Environment.SetEnvironmentVariable("NUGET_PACKAGES", "~/.nuget/packages");
-            }
+            // if (Environment.OSVersion.Platform is PlatformID.Win32NT)
+            // {
+            //     Environment.SetEnvironmentVariable("NUGET_PACKAGES","%userprofile%\\.nuget\\packages");
+            // }
+            // else
+            // {
+            //     Environment.SetEnvironmentVariable("NUGET_PACKAGES", "~/.nuget/packages");
+            // }
             
             Log.Debug("NuGet Packages: {0}", Environment.GetEnvironmentVariable("NUGET_PACKAGES"));
         });
