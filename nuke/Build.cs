@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
@@ -63,15 +64,8 @@ partial class Build : NukeBuild
         {
             versions = new Dictionary<string, string>();
             // NuGet Packages
-            // if (Environment.OSVersion.Platform is PlatformID.Win32NT)
-            // {
-            //     Environment.SetEnvironmentVariable("NUGET_PACKAGES","%userprofile%\\.nuget\\packages");
-            // }
-            // else
-            // {
-            //     Environment.SetEnvironmentVariable("NUGET_PACKAGES", "~/.nuget/packages");
-            // }
-            
+            var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            Environment.SetEnvironmentVariable("NUGET_PACKAGES",Path.Combine(home,".nuget","packages"));
             Log.Debug("NuGet Packages: {0}", Environment.GetEnvironmentVariable("NUGET_PACKAGES"));
         });
 
