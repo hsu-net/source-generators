@@ -61,6 +61,7 @@ partial class Build : NukeBuild
         .Description("Initial")
         .Executes(() =>
         {
+            versions = new Dictionary<string, string>();
         });
 
     Target Clean => _ => _
