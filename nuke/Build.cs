@@ -71,6 +71,8 @@ partial class Build : NukeBuild
             {
                 Environment.SetEnvironmentVariable("NUGET_PACKAGES", "~/.nuget/packages");
             }
+            
+            Log.Debug("NuGet Packages: {0}", Environment.GetEnvironmentVariable("NUGET_PACKAGES"));
         });
 
     Target Clean => _ => _
