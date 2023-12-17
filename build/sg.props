@@ -16,6 +16,7 @@
         <PackageTags>SourceGenerator;sg;$(PackageTags)</PackageTags>
         <IncludeSymbols>false</IncludeSymbols>
         <ObfuscarAssembliesInclude>true</ObfuscarAssembliesInclude>
+        <PackageOutputPath>$(MSBuildThisFileDirectory)..\artifacts</PackageOutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)'== 'Release'">

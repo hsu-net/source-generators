@@ -45,7 +45,7 @@ partial class Build : NukeBuild
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath OutputDirectory => RootDirectory / "output";
-    AbsolutePath ArtifactsDirectory => OutputDirectory / "artifacts";
+    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
     Dictionary<string, string> versions;
     DateTimeOffset VersionDateTimeOffset;
@@ -115,7 +115,7 @@ partial class Build : NukeBuild
                     .SetProjectFile(project)
                     .SetConfiguration(Configuration)
                     .SetVersion(version)
-                    .SetPackageDirectory(ArtifactsDirectory)
+                    //.SetPackageDirectory(ArtifactsDirectory)
                     .EnableContinuousIntegrationBuild()
                 );
             });
