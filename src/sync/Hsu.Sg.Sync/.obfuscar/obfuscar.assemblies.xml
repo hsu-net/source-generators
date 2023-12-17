@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Include>
     <AssemblySearchPath path='.' />
-    <AssemblySearchPath path="%NUGET_PACKAGES%\microsoft.codeanalysis.common\4.8.0\lib\netstandard2.0" />
+    <AssemblySearchPath path="%NUGET_PACKAGES%\microsoft.codeanalysis.common\4.7.0\lib\netstandard2.0" />
     <AssemblySearchPath path="%NUGET_PACKAGES%\microsoft.codeanalysis.csharp\4.7.0\lib\netstandard2.0" />
 </Include>
