@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MimeMapping;
@@ -7,6 +8,7 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.GitHub;
 using Octokit;
+using Serilog;
 // ReSharper disable AllUnderscoreLocalParameterName
 
 #pragma warning disable S3903
@@ -41,32 +43,39 @@ partial class Build
         .DependsOn(Artifacts)
         .Executes(async () =>
         {
-            var version = $"{GetVersionPrefix()}{GetVersionSuffix()}";
-            var tag = $"v{version}";
-            GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubActions.Token.NotNull());
-            var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
-                Repository.GetGitHubOwner(),
-                Repository.GetGitHubName(),
-                new NewRelease(tag)
-                {
-                    Name = tag,
-                    Prerelease = true,
-                    Draft = true,
-                    Body = $"Release v{version} at {DateTimeNow():yyyy-MM-dd HH:mm:ss}"
-                });
-
-            var uploads = ArtifactsDirectory.GlobFiles("**/*").NotNull().Select(async x =>
+            try
             {
-                await using var assetFile = File.OpenRead(x);
-                var asset = new ReleaseAssetUpload
-                {
-                    FileName = x.Name,
-                    ContentType = MimeUtility.GetMimeMapping(x),
-                    RawData = assetFile
-                };
-                await GitHubTasks.GitHubClient.Repository.Release.UploadAsset(release, asset);
-            }).ToArray();
+                var version = $"{GetVersionPrefix()}{GetVersionSuffix()}";
+                var tag = $"v{version}";
+                GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubActions.Token.NotNull());
+                var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
+                    Repository.GetGitHubOwner(),
+                    Repository.GetGitHubName(),
+                    new NewRelease(tag)
+                    {
+                        Name = tag,
+                        Prerelease = true,
+                        Draft = true,
+                        Body = $"Release v{version} at {DateTimeNow():yyyy-MM-dd HH:mm:ss}"
+                    });
 
-            Task.WaitAll(uploads);
+                var uploads = ArtifactsDirectory.GlobFiles("**/*").NotNull().Select(async x =>
+                {
+                    await using var assetFile = File.OpenRead(x);
+                    var asset = new ReleaseAssetUpload
+                    {
+                        FileName = x.Name,
+                        ContentType = MimeUtility.GetMimeMapping(x),
+                        RawData = assetFile
+                    };
+                    await GitHubTasks.GitHubClient.Repository.Release.UploadAsset(release, asset);
+                }).ToArray();
+
+                Task.WaitAll(uploads);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Failed to create GitHub release");
+            }
         });
 }
