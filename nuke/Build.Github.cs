@@ -13,7 +13,7 @@ using Octokit;
 
 [GitHubActions(
     "build",
-    GitHubActionsImage.UbuntuLatest,
+    GitHubActionsImage.WindowsLatest,
     AutoGenerate = true,
     PublishArtifacts = true,
     EnableGitHubToken = true,
@@ -23,7 +23,7 @@ using Octokit;
 )]
 [GitHubActions(
     "deploy",
-    GitHubActionsImage.UbuntuLatest,
+    GitHubActionsImage.WindowsLatest,
     AutoGenerate = true,
     PublishArtifacts = true,
     EnableGitHubToken = true,
