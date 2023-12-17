@@ -1,9 +1,11 @@
 # Hsu.Sg
 
-[![dev](https://github.com/hsu-net/daemon/actions/workflows/build.yml/badge.svg?branch=dev)](https://github.com/hsu-net/daemon/actions/workflows/build.yml)
-[![preview](https://github.com/hsu-net/daemon/actions/workflows/deploy.yml/badge.svg?branch=preview)](https://github.com/hsu-net/daemon/actions/workflows/deploy.yml)
-[![main](https://github.com/hsu-net/daemon/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/hsu-net/daemon/actions/workflows/deploy.yml)
+[![dev](https://github.com/hsu-net/source-generators/actions/workflows/build.yml/badge.svg?branch=dev)](https://github.com/hsu-net/source-generators/actions/workflows/build.yml)
+[![preview](https://github.com/hsu-net/source-generators/actions/workflows/deploy.yml/badge.svg?branch=preview)](https://github.com/hsu-net/source-generators/actions/workflows/deploy.yml)
+[![main](https://github.com/hsu-net/source-generators/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/hsu-net/source-generators/actions/workflows/deploy.yml)
 [![nuke build](https://img.shields.io/badge/nuke-build-yellow.svg)](https://github.com/nuke-build/nuke)
+
+.NET source generators
 
 ## Package Version
 
