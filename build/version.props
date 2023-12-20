@@ -1,17 +1,17 @@
 ﻿<Project>
   <PropertyGroup Condition="'$(AssemblyName)'=='Hsu.Sg.Sync'">
-    <Version>2023.412.14.1</Version>
-    <FileVersion>2023.412.14.0</FileVersion>
+    <Version>2023.412.20</Version>
+    <FileVersion>2023.412.20.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(AssemblyName)'=='Hsu.Sg.Proxy'">
-    <Version>2023.412.12</Version>
-    <FileVersion>2023.412.12.0</FileVersion>
+    <Version>2023.412.20</Version>
+    <FileVersion>2023.412.20.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(AssemblyName)'=='Hsu.Sg.FluentMember'">
-    <Version>2023.412.13</Version>
-    <FileVersion>2023.412.13.0</FileVersion>
+    <Version>2023.412.20</Version>
+    <FileVersion>2023.412.20.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 </Project>

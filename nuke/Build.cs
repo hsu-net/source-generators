@@ -45,6 +45,7 @@ partial class Build : NukeBuild
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    AbsolutePath LibraryDirectory => OutputDirectory / "libs";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
     Dictionary<string, string> versions;
@@ -76,6 +77,7 @@ partial class Build : NukeBuild
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(x => x.DeleteDirectory());
             OutputDirectory.CreateOrCleanDirectory();
+            LibraryDirectory.CreateOrCleanDirectory();
             ArtifactsDirectory.CreateOrCleanDirectory();
         });
 
@@ -114,6 +116,7 @@ partial class Build : NukeBuild
                 DotNetBuild(p => p
                     .SetProjectFile(project)
                     .SetConfiguration(Configuration)
+                    .SetOutputDirectory(LibraryDirectory)
                     .SetVersion(version)
                     //.SetPackageDirectory(ArtifactsDirectory)
                     .EnableContinuousIntegrationBuild()
