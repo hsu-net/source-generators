@@ -51,6 +51,11 @@ namespace Hsu.Sg.Proxy
         public bool Sealed { get; set; } = false;
 
         /// <summary>
+        /// To generate proxy member with virtual keyword.
+        /// </summary>
+        public bool Virtual { get; set; } = true;
+
+        /// <summary>
         /// The specific object name of proxy object.
         /// </summary>
         public string Identifier { get; set; } = string.Empty;
@@ -90,6 +95,7 @@ namespace Hsu.Sg.Proxy
             Only = false;
             Abstract = false;
             Sealed = false;
+            Virtual = true;
             Identifier = string.Empty;
             Suffix = string.Empty;
             Interfaces = null;

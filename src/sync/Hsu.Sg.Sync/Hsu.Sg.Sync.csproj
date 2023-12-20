@@ -14,9 +14,5 @@
         <AdditionalFiles Include="AnalyzerReleases.*.md"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2"/>
-    </ItemGroup>
-
     <Import Project="..\..\..\build\common.props"/>
 </Project>

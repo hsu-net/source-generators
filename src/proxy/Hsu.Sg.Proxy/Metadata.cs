@@ -33,6 +33,11 @@ internal record Metadata
     public bool Sealed { get; set; }
 
     /// <summary>
+    /// To generate proxy member with virtual keyword.
+    /// </summary>
+    public bool Virtual { get; set; } = true;
+
+    /// <summary>
     /// The specific object name of proxy object.
     /// </summary>
     public string Identifier { get; set; } = string.Empty;
@@ -68,6 +73,7 @@ internal record Metadata
         builder
             .Append($"{nameof(Only)} = {Only}, ")
             .Append($"{nameof(Abstract)} = {Abstract}, ")
+            .Append($"{nameof(Virtual)} = {Virtual}, ")
             .Append($"{nameof(Public)} = {Public}, ")
             .Append($"{nameof(Internal)} = {Internal}, ")
             .Append($"{nameof(Static)} = {Static}, ")
@@ -126,6 +132,9 @@ internal record Metadata
                         break;
                     case nameof(Sealed):
                         attribute.Sealed = bool.Parse(item.Value.ToCSharpString());
+                        break;
+                    case nameof(Virtual):
+                        attribute.Virtual = bool.Parse(item.Value.ToCSharpString());
                         break;
                     case nameof(Only):
                         attribute.Only = bool.Parse(item.Value.ToCSharpString());

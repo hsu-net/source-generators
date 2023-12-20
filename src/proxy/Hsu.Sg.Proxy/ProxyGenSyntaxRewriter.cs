@@ -74,9 +74,15 @@ internal sealed class ProxyGenSyntaxRewriter(SemanticModel semanticModel, TypeDe
             .Add( SyntaxFactory
                 .Comment($"/// <remarks>{metadata}</remarks>"));
 
+        var modifiers = node.Modifiers;
+        if (IsVirtual(node.Modifiers))
+        {
+            modifiers = modifiers.Add(SyntaxFactory.Token(SyntaxKind.VirtualKeyword));
+        }
+
         var property = SyntaxFactory
             .PropertyDeclaration(node.Type, node.Identifier)
-            .WithModifiers(node.Modifiers)
+            .WithModifiers(modifiers)
             .WithLeadingTrivia(comments)
             .WithTrailingTrivia(SyntaxFactory.TriviaList(SyntaxFactory.CarriageReturnLineFeed));
 
@@ -145,6 +151,11 @@ internal sealed class ProxyGenSyntaxRewriter(SemanticModel semanticModel, TypeDe
             }
 
             modifiers = new SyntaxTokenList(modifiersArray);
+        }
+
+        if (IsVirtual(node.Modifiers))
+        {
+            modifiers = modifiers.Add(SyntaxFactory.Token(SyntaxKind.VirtualKeyword));
         }
 
         if (type is InterfaceDeclarationSyntax)
@@ -218,6 +229,19 @@ internal sealed class ProxyGenSyntaxRewriter(SemanticModel semanticModel, TypeDe
             .WithConstraintClauses(clauses)
             .WithExpressionBody(body)
             .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+    }
+
+    private bool IsVirtual(SyntaxTokenList modifiers)
+    {
+        if (attribute.Sealed) return false;
+        if (!attribute.Virtual) return false;
+        if (modifiers.Any(x =>
+                x.IsKind(SyntaxKind.ConstKeyword) ||
+                x.IsKind(SyntaxKind.StaticKeyword) ||
+                x.IsKind(SyntaxKind.VirtualKeyword) ||
+                x.IsKind(SyntaxKind.AbstractKeyword))) return false;
+
+        return true;
     }
 
     private bool IsGen(MemberDeclarationSyntax node, Metadata sync,bool? ignore)

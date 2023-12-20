@@ -15,7 +15,7 @@ using Serilog;
 
 [GitHubActions(
     "build",
-    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     PublishArtifacts = true,
     EnableGitHubToken = true,
@@ -25,7 +25,7 @@ using Serilog;
 )]
 [GitHubActions(
     "deploy",
-    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     PublishArtifacts = true,
     EnableGitHubToken = true,
@@ -41,6 +41,7 @@ partial class Build
     Target Release => _ => _
         .Description("Release")
         .DependsOn(Artifacts)
+        .ProceedAfterFailure()
         .Executes(async () =>
         {
             try

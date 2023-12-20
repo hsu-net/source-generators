@@ -5,6 +5,7 @@
 		<PackageProjectUrl>https://github.com/hsu-net/source-generators</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<LicenseFile>LICENSE</LicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Company>Hsu</Company>
 		<Authors>Hsu</Authors>
 		<Copyright>Copyright © Hsu 2023-now</Copyright>

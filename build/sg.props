@@ -17,14 +17,7 @@
         <IncludeSymbols>false</IncludeSymbols>
         <ObfuscarAssembliesInclude>true</ObfuscarAssembliesInclude>
         <PackageOutputPath>$(MSBuildThisFileDirectory)..\artifacts</PackageOutputPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)'== 'Release'">
-        <ObfuscarBuild>true</ObfuscarBuild>
-    </PropertyGroup>
-    
-    <PropertyGroup Condition="'$(Configuration)' != 'Release'">
-        <ObfuscarBuild>false</ObfuscarBuild>
+        <AssemblySearchNames>Microsoft.CodeAnalysis.dll;Microsoft.CodeAnalysis.CSharp.dll</AssemblySearchNames>
     </PropertyGroup>
 
     <ItemGroup>
@@ -39,6 +32,7 @@
         <!-- Package the generator in the analyzer directory of the nuget package -->
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
         <None Include="$(MSBuildThisFileDirectory)tools\*.*" Pack="true" PackagePath="tools" Visible="false"/>
+        <None Include="$(ProjectDir)README.md" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <ItemGroup>
@@ -46,13 +40,12 @@
             <_Parameter1>$(MSBuildProjectName).Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-
+    
     <ItemGroup>
-        <PackageReference Include="Hsu.Obfuscar.DotNetTool" Version="2023.412.14">
+        <PackageReference Include="Hsu.Obfuscar.DotNetTool" Version="2023.412.20-rc203929">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2"/>
     </ItemGroup>
-
-    <!--    <Import Project="./obfuscar.props"/>-->
 </Project>
