@@ -45,10 +45,9 @@ partial class Build : NukeBuild
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath OutputDirectory => RootDirectory / "output";
-    AbsolutePath LibraryDirectory => OutputDirectory / "libs";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
-    Dictionary<string, string> versions;
+    readonly Dictionary<string, string> Versions = new();
     DateTimeOffset VersionDateTimeOffset;
 
     protected override void OnBuildInitialized()
@@ -63,7 +62,6 @@ partial class Build : NukeBuild
         .Description("Initial")
         .Executes(() =>
         {
-            versions = new Dictionary<string, string>();
             // NuGet Packages
             var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             Environment.SetEnvironmentVariable("NUGET_PACKAGES",Path.Combine(home,".nuget","packages"));
@@ -77,7 +75,6 @@ partial class Build : NukeBuild
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(x => x.DeleteDirectory());
             OutputDirectory.CreateOrCleanDirectory();
-            LibraryDirectory.CreateOrCleanDirectory();
             ArtifactsDirectory.CreateOrCleanDirectory();
         });
 
@@ -110,15 +107,13 @@ partial class Build : NukeBuild
                     latest = NuGetVersion.Parse(ver);
                 }
                 var version = $"{GetVersionPrefix(latest)}{GetVersionSuffix()}";
-                versions.Add(id,version);
+                Versions.Add(id,version);
                 
                 // Compile
                 DotNetBuild(p => p
                     .SetProjectFile(project)
                     .SetConfiguration(Configuration)
-                    .SetOutputDirectory(LibraryDirectory)
                     .SetVersion(version)
-                    //.SetPackageDirectory(ArtifactsDirectory)
                     .EnableContinuousIntegrationBuild()
                 );
             });
