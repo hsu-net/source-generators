@@ -9,7 +9,8 @@
 		<Company>Hsu</Company>
 		<Authors>Hsu</Authors>
 		<Copyright>Copyright © Hsu 2023-now</Copyright>
-		<OutputPath>$([System.IO.Path]::GetFullPath("..",$(MSBuildThisFileDirectory)))\output\libs\$(AssemblyName)</OutputPath>
+<!--		<OutputPath>$([System.IO.Path]::GetFullPath("..",$(MSBuildThisFileDirectory)))\output\libs\$(AssemblyName)</OutputPath>-->
+		<OutputPath>$(MSBuildThisFileDirectory)output\libs\$(AssemblyName)</OutputPath>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<LangVersion>11.0</LangVersion>
 		<Nullable>enable</Nullable>

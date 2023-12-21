@@ -4,7 +4,7 @@
   <!-- https://github.com/obfuscar/obfuscar/blob/master/Obfuscar/Settings.cs -->
   
   <Var name="InPath" value="." />
-  <Var name="OutPath" value=".\obfuscated" />
+  <Var name="OutPath" value="obfuscated" />
   <Var name="RenameFields" value="true" />
   <Var name="RenameProperties" value="true" />
   <Var name="RenameEvents" value="true" />
