@@ -76,6 +76,7 @@ public partial class Generator : IIncrementalGenerator
             var merged = SyntaxFactory.CompilationUnit();
             TypeDeclarationSyntax type = null!;
             BaseNamespaceDeclarationSyntax nd = null!;
+            string typeIdentifier=null!;
 
             foreach(var item in group)
             {
@@ -86,7 +87,9 @@ public partial class Generator : IIncrementalGenerator
                 var semanticModel = source.Compilation.GetSemanticModel(root.SyntaxTree);
 
                 // Symbols allow us to get the compile-time information.
-                if (semanticModel.GetDeclaredSymbol(item.Syntax) is null) continue;
+                if (semanticModel.GetDeclaredSymbol(item.Syntax) is not { } symbol) continue;
+                typeIdentifier = symbol.MetadataName;
+                
                 GenSyntaxRewriter rewriter;
                 if (item.Attribute.Definable)
                 {
@@ -130,6 +133,8 @@ public partial class Generator : IIncrementalGenerator
                 {
                     type = t
                         .WithoutTrivia()
+                        .WithTypeParameterList(t.TypeParameterList)
+                        .WithConstraintClauses(t.ConstraintClauses)
                         .WithMembers(SyntaxFactory.List<MemberDeclarationSyntax>());
 
                     nd = ns
@@ -170,11 +175,13 @@ public partial class Generator : IIncrementalGenerator
                             .OfType<MethodDeclarationSyntax>()
                             .ToArray()
                         ))
+                    .WithTypeParameterList(type.TypeParameterList)
+                    .WithConstraintClauses(type.ConstraintClauses)
                     .WithModifiers(type.Modifiers);
 
                 merged = CompilationUnitMerged(merged, nd, type, comment, counter, st);
                 var formatted = CompilationUnitFormat(merged);
-                ctx.AddSource($"{nd.Name.ToFullString()}.{type.Identifier.ToFullString().Trim()}.{GenSuffix}.g.cs",
+                ctx.AddSource($"{nd.Name.ToFullString()}.{typeIdentifier}.{GenSuffix}.g.cs",
                     SourceText.From(formatted.ToFullString(), Encoding.UTF8));
             }
 
@@ -196,6 +203,8 @@ public partial class Generator : IIncrementalGenerator
                                 .OfType<MethodDeclarationSyntax>()
                                 .ToArray()
                             ))
+                        .WithTypeParameterList(type.TypeParameterList)
+                        .WithConstraintClauses(type.ConstraintClauses)
                         .WithModifiers(type.Modifiers
                             .Remove(type.Modifiers.FirstOrDefault(x => x.IsKind(SyntaxKind.PartialKeyword)))
                             .Add(SyntaxFactory
@@ -211,6 +220,8 @@ public partial class Generator : IIncrementalGenerator
                                 .OfType<MethodDeclarationSyntax>()
                                 .ToArray()
                             ))
+                        .WithTypeParameterList(type.TypeParameterList)
+                        .WithConstraintClauses(type.ConstraintClauses)
                         .WithModifiers(type.Modifiers);
                 }
 
@@ -236,7 +247,7 @@ public partial class Generator : IIncrementalGenerator
 
                 merged = CompilationUnitMerged(merged, nd, type, comment, counter, st);
                 var formatted = CompilationUnitFormat(merged);
-                ctx.AddSource($"{nd.Name.ToFullString()}.{type.Identifier.ToFullString().Trim()}{suffix}.{GenSuffix}.g.cs",
+                ctx.AddSource($"{nd.Name.ToFullString()}.{typeIdentifier}{suffix}.{GenSuffix}.g.cs",
                     SourceText.From(formatted.ToFullString(), Encoding.UTF8));
             }
         }

@@ -8,7 +8,7 @@ namespace Hsu.Sg.FluentMember;
 #pragma warning disable S125
 #pragma warning disable S3776
 
-internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata attribute, string identifier) : CSharpSyntaxRewriter
+internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata attribute, string typeIdentifier) : CSharpSyntaxRewriter
 {
     private readonly ImmutableArray<Diagnostic>.Builder _diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
     private int _counter;
@@ -208,7 +208,7 @@ internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata at
         var name = !string.IsNullOrWhiteSpace(metadata?.Identifier)
             ? metadata!.Identifier.Trim()
             : $"{Prefix()}{id}";
-        var identifier1 = SyntaxFactory.Identifier(name);
+        var identifier = SyntaxFactory.Identifier(name);
         
         var comments = SyntaxFactory
             .TriviaList()
@@ -298,7 +298,7 @@ internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata at
                     .ReturnStatement(SyntaxFactory
                         .ThisExpression()));
 
-        return SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(identifier), identifier1)
+        return SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(typeIdentifier), identifier)
             .WithModifiers(modifiers)
             .WithLeadingTrivia(comments)
             .WithParameterList(parameters)
@@ -341,7 +341,28 @@ internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata at
         if (node is not TypeDeclarationSyntax t) return node;
 
         return t
-            .WithAttributeLists(new SyntaxList<AttributeListSyntax>())
-            .WithConstraintClauses(new SyntaxList<TypeParameterConstraintClauseSyntax>());
+            .WithTypeParameterList(t.TypeParameterList?.WithoutTrivia())
+            .WithConstraintClauses(GetConstraintClauses(t.ConstraintClauses))
+            .WithAttributeLists([]);
+    }
+
+    private static SyntaxList<TypeParameterConstraintClauseSyntax> GetConstraintClauses(SyntaxList<TypeParameterConstraintClauseSyntax> list)
+    {
+        SyntaxList<TypeParameterConstraintClauseSyntax> result = [];
+        foreach (var item in list)
+        {
+            SeparatedSyntaxList<TypeParameterConstraintSyntax> sl = [];
+            foreach (var cst in item.Constraints)
+            {
+                sl = sl.Add(cst.WithoutTrivia());
+            }
+
+            result = result.Add(item
+                .WithConstraints(sl)
+                .WithoutTrivia()
+            );
+        }
+
+        return result;
     }
 }

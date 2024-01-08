@@ -73,6 +73,8 @@ public partial class Generator : IIncrementalGenerator
             var merged = SyntaxFactory.CompilationUnit();
             TypeDeclarationSyntax type = null!;
             BaseNamespaceDeclarationSyntax nd = null!;
+            string typeIdentifier=null!;
+            
             foreach(var item in group)
             {
                 var root = item.Syntax.SyntaxTree.GetRoot();
@@ -88,7 +90,8 @@ public partial class Generator : IIncrementalGenerator
                 var semanticModel = compile.GetSemanticModel(root.SyntaxTree);
 
                 // Symbols allow us to get the compile-time information.
-                if (semanticModel.GetDeclaredSymbol(item.Syntax) is not { }) continue;
+                if (semanticModel.GetDeclaredSymbol(item.Syntax) is not { } symbol) continue;
+                typeIdentifier = symbol.MetadataName;
 
                 var rewriter = new ProxyGenSyntaxRewriter(semanticModel, item.Syntax, item.Attribute);
                 if (rewriter.Visit(item.Syntax) is not TypeDeclarationSyntax node || rewriter.Counter == 0) continue;
@@ -148,10 +151,9 @@ public partial class Generator : IIncrementalGenerator
             type = TypeDeclaration(type, st);
             merged = CompilationUnitMerged(merged, nd, type, comment, counter, st);
             var formatted = CompilationUnitFormat(merged);
-            ctx.AddSource($"{nd.Name.ToFullString()}.{group.Key}.{GenSuffix}.g.cs",
+            ctx.AddSource($"{nd.Name.ToFullString()}.{typeIdentifier}.{GenSuffix}.g.cs",
                 SourceText.From(formatted.ToFullString(), Encoding.UTF8));
         }
-        
     }
 
     private static TypeSource? TypeDeclarationTransform(GeneratorSyntaxContext ctx, CancellationToken cancellation)

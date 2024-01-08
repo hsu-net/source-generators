@@ -60,3 +60,10 @@ public partial class TestEventClass
         new TestEventClass().WithOnEventPrivate((s, e) => { });
     }
 }
+
+[FluentMember(Private = true)]
+public partial class GenericClass<T> where T:struct
+{
+    [FluentMemberGen(Modifier = Accessibility.Public)] 
+    private event EventHandler onEventPrivate;
+}

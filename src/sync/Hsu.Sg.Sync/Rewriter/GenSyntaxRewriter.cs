@@ -7,21 +7,13 @@ namespace Hsu.Sg.Sync.Rewriter;
 // ReSharper disable IdentifierTypo
 #pragma warning disable S125
 
-internal abstract class GenSyntaxRewriter : CSharpSyntaxRewriter
+internal abstract class GenSyntaxRewriter(SemanticModel semanticModel, Metadata attribute, string identifier) : CSharpSyntaxRewriter
 {
-    protected readonly Metadata _attribute;
-    protected readonly string _identifier;
+    protected readonly Metadata _attribute = attribute;
+    protected readonly string _identifier = identifier;
     protected readonly ImmutableArray<Diagnostic>.Builder _diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-    protected readonly SemanticModel _semanticModel;
-    protected int _counter;
-
-    protected GenSyntaxRewriter(SemanticModel semanticModel, Metadata attribute, string identifier)
-    {
-        _counter = 0;
-        _semanticModel = semanticModel;
-        _attribute = attribute;
-        _identifier = identifier;
-    }
+    protected readonly SemanticModel _semanticModel = semanticModel;
+    protected int _counter = 0;
 
     /// <summary>
     ///     Gets the diagnostics messages.
@@ -57,10 +49,10 @@ internal abstract class GenSyntaxRewriter : CSharpSyntaxRewriter
 
     protected static SyntaxList<TypeParameterConstraintClauseSyntax> GetConstraintClauses(SyntaxList<TypeParameterConstraintClauseSyntax> list)
     {
-        SyntaxList<TypeParameterConstraintClauseSyntax> result = new();
+        SyntaxList<TypeParameterConstraintClauseSyntax> result = [];
         foreach (var item in list)
         {
-            SeparatedSyntaxList<TypeParameterConstraintSyntax> sl = new();
+            SeparatedSyntaxList<TypeParameterConstraintSyntax> sl = [];
             foreach (var cst in item.Constraints)
             {
                 sl = sl.Add(cst.WithoutTrivia());
@@ -68,7 +60,8 @@ internal abstract class GenSyntaxRewriter : CSharpSyntaxRewriter
 
             result = result.Add(item
                 .WithConstraints(sl)
-                .WithoutTrivia());
+                .WithoutTrivia()
+            );
         }
 
         return result;
@@ -79,8 +72,9 @@ internal abstract class GenSyntaxRewriter : CSharpSyntaxRewriter
         if (node is not TypeDeclarationSyntax t) return node;
 
         return t
-            .WithAttributeLists(new SyntaxList<AttributeListSyntax>())
-            .WithConstraintClauses(new SyntaxList<TypeParameterConstraintClauseSyntax>());
+            .WithTypeParameterList(t.TypeParameterList?.WithoutTrivia())
+            .WithConstraintClauses(GetConstraintClauses(t.ConstraintClauses))
+            .WithAttributeLists([]);
     }
     
     protected string Suffix(GenMetadata? attribute)
