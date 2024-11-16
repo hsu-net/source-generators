@@ -24,19 +24,19 @@
 
 Generate a synchronous method from an asynchronous method.
 
-Usages see [README](./src/Hsu.Sg.Sync/README.md)
+Usages see [README](./src/sync/Hsu.Sg.Sync/README.md)
 
 ### Hsu.Sg.Proxy
 
 Generate a proxy object from a `struct` or `class` or `interface`.
 
-Usages see [README](./src/Hsu.Sg.Proxy/README.md)
+Usages see [README](./src/proxy/Hsu.Sg.Proxy/README.md)
 
 ### Hsu.Sg.FluentMember
 
 Generate a fluent method from a `struct` or `class`.
 
-Usages see [README](./src/Hsu.Sg.FluentMember/README.md)
+Usages see [README](./src/fluent-member/Hsu.Sg.FluentMember/README.md)
 
 ## References
 
