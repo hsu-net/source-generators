@@ -1,4 +1,5 @@
 ﻿// ReSharper disable StringLiteralTypo
+using System.Diagnostics;
 using DiagnosticDescriptor = Microsoft.CodeAnalysis.DiagnosticDescriptor;
 
 namespace Hsu.Sg.FluentMember;
@@ -47,17 +48,21 @@ internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata at
 
     public override SyntaxNode? VisitPropertyDeclaration(PropertyDeclarationSyntax node)
     {
-        Console.WriteLine("VisitFieldDeclaration:");
-        Console.WriteLine("\t-" + node.Modifiers);
-        Console.WriteLine("\t-" + node.Type.ToFullString());
-        Console.WriteLine("\t-" + node.Identifier.ToFullString());
+#if DEBUG
+        Debug.WriteLine("VisitFieldDeclaration:");
+        Debug.WriteLine("\t-" + node.Modifiers);
+        Debug.WriteLine("\t-" + node.Type.ToFullString());
+        Debug.WriteLine("\t-" + node.Identifier.ToFullString()); 
+#endif
         var @readonly = node.Modifiers.Any(a => a.IsKind(SyntaxKind.ReadOnlyKeyword)) || 
             node.AccessorList == null ||
             node.AccessorList.Accessors.Any(a => 
                 a.IsKind(SyntaxKind.InitKeyword) || 
                 a.IsKind(SyntaxKind.InitAccessorDeclaration));
-        
-        Console.WriteLine("\t-readonly:" + @readonly);
+
+#if DEBUG
+        Debug.WriteLine("\t-readonly:" + @readonly); 
+#endif
         if (@readonly) return null;
         //return base.VisitPropertyDeclaration(node);
 
@@ -70,12 +75,12 @@ internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata at
 
     public override SyntaxNode? VisitFieldDeclaration(FieldDeclarationSyntax node)
     {
-        Console.WriteLine("VisitFieldDeclaration:");
-        Console.WriteLine("\t-" + node.Modifiers);
-        Console.WriteLine("\t-" + node.Declaration.Type.ToFullString());
-        Console.WriteLine("\t-" + node.Declaration.Variables.First().Identifier.ToFullString());
+        Debug.WriteLine("VisitFieldDeclaration:");
+        Debug.WriteLine("\t-" + node.Modifiers);
+        Debug.WriteLine("\t-" + node.Declaration.Type.ToFullString());
+        Debug.WriteLine("\t-" + node.Declaration.Variables.First().Identifier.ToFullString());
         var @readonly = node.Modifiers.Any(a => a.IsKind(SyntaxKind.ReadOnlyKeyword));
-        Console.WriteLine("\t-readonly:" + @readonly);
+        Debug.WriteLine("\t-readonly:" + @readonly);
         if (@readonly) return null;
         //return base.VisitFieldDeclaration(node);
         
@@ -88,12 +93,12 @@ internal sealed class GenSyntaxRewriter(SemanticModel semanticModel, Metadata at
 
     public override SyntaxNode? VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
     {
-        Console.WriteLine("VisitEventFieldDeclaration:");
-        Console.WriteLine("\t-" + node.Modifiers);
-        Console.WriteLine("\t-" + node.Declaration.Type.ToFullString());
-        Console.WriteLine("\t-" + node.Declaration.Variables.First().Identifier.ToFullString());
+        Debug.WriteLine("VisitEventFieldDeclaration:");
+        Debug.WriteLine("\t-" + node.Modifiers);
+        Debug.WriteLine("\t-" + node.Declaration.Type.ToFullString());
+        Debug.WriteLine("\t-" + node.Declaration.Variables.First().Identifier.ToFullString());
         var @readonly = node.Modifiers.Any(a => a.IsKind(SyntaxKind.ReadOnlyKeyword));
-        Console.WriteLine("\t-readonly:" + @readonly);
+        Debug.WriteLine("\t-readonly:" + @readonly);
         if (@readonly) return null;
         //return base.VisitEventFieldDeclaration(node);
 

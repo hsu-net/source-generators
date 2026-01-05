@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Hsu.Sg.FluentMember;
 
 /// <summary>
@@ -21,7 +23,7 @@ public partial class Generator : IIncrementalGenerator
         {
             analyzer.GlobalOptions.TryGetValue(FluentMemberPrefix,out var prefix);
             GlobalFluentMemberPrefix = prefix;
-            Console.WriteLine($"{nameof(GlobalFluentMemberPrefix)}:{GlobalFluentMemberPrefix}");
+            Debug.WriteLine($"{nameof(GlobalFluentMemberPrefix)}:{GlobalFluentMemberPrefix}");
         });
         
         // Check DefaultImplementationsOfInterfacesSupported
@@ -30,7 +32,7 @@ public partial class Generator : IIncrementalGenerator
             .Select(CheckTransform);
         context.RegisterSourceOutput(vts, static (ctx, _) =>
         {
-            Console.WriteLine($"{nameof(DefaultImplementationsOfInterfacesSupported)}:{DefaultImplementationsOfInterfacesSupported}");
+            Debug.WriteLine($"{nameof(DefaultImplementationsOfInterfacesSupported)}:{DefaultImplementationsOfInterfacesSupported}");
         });
         
         // Filter classes annotated with the [FluentMember] attribute. Only filtered Syntax Nodes can trigger code generation.
