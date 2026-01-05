@@ -42,7 +42,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Hsu.Obfuscar.DotNetTool" Version="2024.103.4">
+        <PackageReference Include="Hsu.Obfuscar.DotNetTool" Version="2026.101.5-rc135923">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
