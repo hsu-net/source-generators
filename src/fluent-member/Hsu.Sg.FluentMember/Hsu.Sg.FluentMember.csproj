@@ -16,8 +16,8 @@
     <ItemGroup Label="Misc">
         <Compile Remove="Assets\**\*.cs"/>
         <EmbeddedResource Include="Assets\**\*.cs"/>
-        <None Remove="AnalyzerReleases.*.md"/>
-        <AdditionalFiles Include="AnalyzerReleases.*.md"/>
+        <<!--None Remove="AnalyzerReleases.*.md"/>
+        <AdditionalFiles Include="AnalyzerReleases.*.md"/>-->
     </ItemGroup>
 
     <Import Project="..\..\..\build\common.props" />
