@@ -53,8 +53,8 @@ partial class Build : NukeBuild
     protected override void OnBuildInitialized()
     {
         base.OnBuildInitialized();
-        NuGetApiKey ??= Environment.GetEnvironmentVariable(nameof(NuGetApiKey));
-        MyGetApiKey ??= Environment.GetEnvironmentVariable(nameof(MyGetApiKey));
+        NuGetApiKey ??= Environment.GetEnvironmentVariable(nameof(NuGetApiKey))!;
+        MyGetApiKey ??= Environment.GetEnvironmentVariable(nameof(MyGetApiKey))!;
         VersionDateTimeOffset = DateTimeNow();
     }
 
@@ -166,7 +166,7 @@ partial class Build : NukeBuild
             .EnableNoServiceEndpoint()
         );
 
-    string GetVersionPrefix([CanBeNull] NuGetVersion version=null)
+    string GetVersionPrefix([CanBeNull] NuGetVersion? version = null)
     {
         var dt = VersionDateTimeOffset;
         var main = $"{dt:yyyy}.{(dt.Month - 1) / 3 + 1}{dt:MM}.{dt:dd}";

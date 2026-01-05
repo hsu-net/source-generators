@@ -24,12 +24,12 @@ public partial class Generator : IIncrementalGenerator
         
         // Filter classes annotated with the [Proxy] attribute. Only filtered Syntax Nodes can trigger code generation.
         /*
-         * Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.InterfaceDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.RecordDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.StructDeclarationSyntax
-         */
+        * Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.InterfaceDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.RecordDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.StructDeclarationSyntax
+        */
 
         _additionalTypes = context
             .AdditionalTextsProvider

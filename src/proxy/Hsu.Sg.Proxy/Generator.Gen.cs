@@ -132,12 +132,23 @@ public partial class Generator
             .Add(SyntaxFactory.Comment($"// Generated {counter} proxy methods by ProxyGenerator"))
             .Add(SyntaxFactory.CarriageReturnLineFeed)
             .Add(SyntaxFactory.Comment($"// {st.Attribute}"))
+            .Add(SyntaxFactory.CarriageReturnLineFeed)
             .Add(SyntaxFactory.CarriageReturnLineFeed);
+
+        var nullToken = SyntaxFactory.Token(
+            SyntaxFactory.TriviaList([SyntaxFactory.Space]),
+            SyntaxKind.EnableKeyword,
+            SyntaxFactory.TriviaList([SyntaxFactory.Space])
+        );
+        var nullable = SyntaxFactory.NullableDirectiveTrivia(nullToken, true);
 
         merged = merged
             .WithLeadingTrivia(comments
                 .Add(SyntaxFactory.CarriageReturnLineFeed)
-                .AddRange(merged.GetLeadingTrivia().ToArray()));
+                .AddRange([.. merged.GetLeadingTrivia()])
+                .Add(SyntaxFactory.Trivia(nullable))
+            );
+
         return merged;
     }
 
