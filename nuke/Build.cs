@@ -86,6 +86,7 @@ partial class Build : NukeBuild
             DotNetRestore(s => s
                 .SetProjectFile(Solution)
             );
+            DotNetToolRestore();
         });
 
     Target Compile => _ => _
