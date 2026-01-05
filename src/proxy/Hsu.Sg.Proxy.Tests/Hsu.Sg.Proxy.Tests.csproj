@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <!--        <TargetFramework>net8.0</TargetFramework>-->
@@ -15,22 +15,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Generated\**\*"/>
-        <AdditionalFiles Include="Generated\Hsu.Sg.Sync\**\*.sync.cs"/>
+        <Compile Remove="Generated\**\*" />
+        <AdditionalFiles Include="Generated\Hsu.Sg.Sync\**\*.sync.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\sync\Hsu.Sg.Sync\Hsu.Sg.Sync.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-        <ProjectReference Include="..\Hsu.Sg.Proxy\Hsu.Sg.Proxy.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="..\..\sync\Hsu.Sg.Sync\Hsu.Sg.Sync.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\Hsu.Sg.Proxy\Hsu.Sg.Proxy.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Refit" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
-        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4"/>
-        <PackageReference Include="MSTest.TestFramework" Version="3.0.4"/>
-        <PackageReference Include="coverlet.collector" Version="6.0.0"/>
-        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2"/>
+        <PackageReference Include="Refit" Version="9.0.2" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
+        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
+        <PackageReference Include="coverlet.collector" Version="6.0.0" />
+        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2" />
     </ItemGroup>
 
 </Project>

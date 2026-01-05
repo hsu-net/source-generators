@@ -13,8 +13,8 @@ internal static class Extensions
 
     public static SyntaxList<AttributeListSyntax> GetAttributeLists(this MemberDeclarationSyntax syntax,string[]? excludes, params string[]? attributes)
     {
-        excludes ??= Array.Empty<string>();
-        attributes ??= Array.Empty<string>();
+        excludes ??= [];
+        attributes ??= [];
 
         if (syntax.AttributeLists.Count == 0 || attributes.Length == 0 && excludes.Length == 0) return syntax.AttributeLists;
         var attrs = SyntaxFactory.List<AttributeListSyntax>();
@@ -68,6 +68,6 @@ internal static class Extensions
     {
         if (constant.Kind != TypedConstantKind.Array) throw new InvalidCastException();
         if (constant.IsNull || constant.Values.Length == 0) return null;
-        return constant.Values.Select(x => x.ToCSharpString().Replace("\"", "")).ToArray();
+        return [.. constant.Values.Select(x => x.ToCSharpString().Replace("\"", ""))];
     }
 }

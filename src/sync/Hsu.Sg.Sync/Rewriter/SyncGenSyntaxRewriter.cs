@@ -94,7 +94,7 @@ internal sealed class SyncGenSyntaxRewriter(SemanticModel semanticModel, Metadat
         }
         var attrs = _attribute.Attribute 
             && (_attribute.AttributeIncludes?.Length > 0 || _attribute.AttributeExcludes?.Length > 0)
-            ? node.GetAttributeLists(excludes.ToArray(),_attribute.AttributeIncludes)
+            ? node.GetAttributeLists([.. excludes], _attribute.AttributeIncludes)
             : SyntaxFactory.List<AttributeListSyntax>();
 
         // Body

@@ -10,7 +10,7 @@
 	<ItemGroup>
 		<!--    <None Include="$(MSBuildThisFileDirectory)FodyWeavers.xsd" LinkBase=".config" />-->
 		<!--    <None Include="$(MSBuildThisFileDirectory)FodyWeavers.xml" LinkBase=".config" />-->
-		<PackageReference Include="Fody" Version="6.6.4">
+		<PackageReference Include="Fody" Version="6.9.3">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="ConfigureAwait.Fody" Version="3.3.2" Condition="'$(FodyConfigureAwaitable)' == 'true'">

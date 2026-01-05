@@ -8,7 +8,6 @@ namespace Hsu.Sg.Sync;
 [Generator(LanguageNames.CSharp)]
 public partial class Generator : IIncrementalGenerator
 {
-    
     /// <inheritdoc />
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -26,12 +25,12 @@ public partial class Generator : IIncrementalGenerator
 
         // Filter classes annotated with the [Sync] attribute. Only filtered Syntax Nodes can trigger code generation.
         /*
-         * Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.InterfaceDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.RecordDeclarationSyntax
-         *   - Microsoft.CodeAnalysis.CSharp.Syntax.StructDeclarationSyntax
-         */
+        * Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.InterfaceDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.RecordDeclarationSyntax
+        *   - Microsoft.CodeAnalysis.CSharp.Syntax.StructDeclarationSyntax
+        */
 
         var sources = context
             .SyntaxProvider
@@ -152,7 +151,7 @@ public partial class Generator : IIncrementalGenerator
                     }
                 }
 
-                type = type.AddMembers(t.Members.ToArray());
+                type = type.AddMembers([.. t.Members]);
             }
 
             if (counter == 0) continue;

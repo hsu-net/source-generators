@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/nuke/">
+    <Project Path="nuke/NukeBuild.csproj">
+      <Build Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/fluent-member/">
+    <Project Path="src/fluent-member/Hsu.Sg.FluentMember.Tests/Hsu.Sg.FluentMember.Tests.csproj" />
+    <Project Path="src/fluent-member/Hsu.Sg.FluentMember/Hsu.Sg.FluentMember.csproj" />
+  </Folder>
+  <Folder Name="/src/proxy/">
+    <Project Path="src/proxy/Hsu.Sg.Proxy.Tests/Hsu.Sg.Proxy.Tests.csproj" />
+    <Project Path="src/proxy/Hsu.Sg.Proxy/Hsu.Sg.Proxy.csproj" />
+  </Folder>
+  <Folder Name="/src/shared/">
+    <Project Path="src/shared/Hsu.Sg.Shared/Hsu.Sg.Shared.shproj" />
+  </Folder>
+  <Folder Name="/src/sync/">
+    <Project Path="src/sync/Hsu.Sg.Sync.Tests/Hsu.Sg.Sync.Tests.csproj" />
+    <Project Path="src/sync/Hsu.Sg.Sync/Hsu.Sg.Sync.csproj" />
+  </Folder>
+</Solution>

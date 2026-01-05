@@ -14,7 +14,7 @@ public partial class Generator
             var sourceText = SourceText.From(stream, Encoding.UTF8, canBeEmbedded: true);
             var file = name.Replace(".Assets", "");
 
-            if (file.EndsWith(".ValueTask.g.cs") || file.EndsWith(".Task.g.cs"))
+            if (file.EndsWith(".ValueTask.g.cs"))
             {
                 if (!ValueTaskTypes.ContainsKey(file)) ValueTaskTypes.Add(file, sourceText);
                 continue;
