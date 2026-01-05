@@ -94,7 +94,7 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            Solution.AllProjects.Where(x=> !x.Name.EndsWith("Tests") && 
+            Solution.AllProjects.Where(x=> !x.Name.EndsWith("Tests") && !x.Name.Equals("Hsu.Sg.Shared") && 
                 x.GetProperty<bool>("IsPackable") && 
                 x.GetProperty<bool>("GeneratePackageOnBuild")
             ).ForEach(project =>
